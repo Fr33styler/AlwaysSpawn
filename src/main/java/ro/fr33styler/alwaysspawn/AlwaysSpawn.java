@@ -21,6 +21,7 @@ public class AlwaysSpawn extends JavaPlugin implements Listener {
 
     public Location spawn;
 
+    @Override
     public void onEnable() {
         loadSpawn();
         getServer().getPluginManager().registerEvents(this, this);
@@ -40,6 +41,7 @@ public class AlwaysSpawn extends JavaPlugin implements Listener {
         }
     }
 
+    @Override
     public boolean onCommand(CommandSender commandSender, Command command, String label, String[] args) {
         if (args.length > 0) {
             commandSender.sendMessage(ChatColor.RED + "Invalid arguments!");
