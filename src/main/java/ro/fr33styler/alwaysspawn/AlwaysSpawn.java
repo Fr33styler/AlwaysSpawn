@@ -62,7 +62,7 @@ public class AlwaysSpawn extends JavaPlugin implements Listener {
             double z = section.getDouble("Z");
             float yaw = (float) section.getDouble("Yaw");
             float pitch = (float) section.getDouble("Pitch");
-            this.spawn = new Location(world, x, y, z, yaw, pitch);
+            spawn = new Location(world, x, y, z, yaw, pitch);
         }
     }
 
