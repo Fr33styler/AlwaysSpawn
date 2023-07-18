@@ -28,16 +28,16 @@ public class AlwaysSpawn extends JavaPlugin implements Listener {
     }
 
     @EventHandler(priority = EventPriority.LOWEST)
-    public void onSpawn(PlayerSpawnLocationEvent e) {
+    public void onSpawn(PlayerSpawnLocationEvent event) {
         if (spawn != null) {
-            e.setSpawnLocation(spawn);
+            event.setSpawnLocation(spawn);
         }
     }
 
     @EventHandler(priority = EventPriority.LOWEST)
-    public void onRespawn(PlayerRespawnEvent e) {
+    public void onRespawn(PlayerRespawnEvent event) {
         if (spawn != null) {
-            e.setRespawnLocation(spawn);
+            event.setRespawnLocation(spawn);
         }
     }
 
