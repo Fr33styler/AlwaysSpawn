@@ -1,0 +1,12 @@
+name: ${plugin.name}
+version: ${project.version}
+main: ${plugin.main.classpath}
+api-version: 1.15
+author: Fr33styler
+softdepend:
+  - WorldLoader
+  - MultiWorld
+  - Multiverse-Core
+commands:
+  SetSpawn:
+    description: The command to set always spawn.
