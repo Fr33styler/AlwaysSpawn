@@ -17,13 +17,14 @@ import org.spigotmc.event.player.PlayerSpawnLocationEvent;
 
 public class AlwaysSpawn extends JavaPlugin implements Listener {
 
+    private static final String PERMISSION_SPAWN = "alwaysspawn.spawn";
     private static final String PERMISSION_SPAWN_SET = "alwaysspawn.set";
 
-    public Location spawn;
+    private Location spawn;
 
     @Override
     public void onEnable() {
-        loadSpawn();
+        loadFromFile();
         getServer().getPluginManager().registerEvents(this, this);
     }
 
@@ -47,15 +48,23 @@ public class AlwaysSpawn extends JavaPlugin implements Listener {
             commandSender.sendMessage(ChatColor.RED + "Invalid arguments!");
         } else if (!(commandSender instanceof Player)) {
             commandSender.sendMessage(ChatColor.RED + "Must be executed by a player!");
-        } else if (commandSender.hasPermission(PERMISSION_SPAWN_SET)) {
-            saveSpawn(spawn = ((Player) commandSender).getLocation());
+        } else if (label.equalsIgnoreCase("setSpawn") && commandSender.hasPermission(PERMISSION_SPAWN_SET)) {
+            spawn = ((Player) commandSender).getLocation();
+            saveToFile();
             commandSender.sendMessage(ChatColor.GREEN + "Spawn successfully set!");
             return true;
+        } else if (label.equalsIgnoreCase("spawn") && commandSender.hasPermission(PERMISSION_SPAWN)) {
+            if (spawn == null) {
+                commandSender.sendMessage(ChatColor.RED + "You must set a spawn first!");
+            } else {
+                ((Player) commandSender).teleport(spawn);
+                return true;
+            }
         }
         return false;
     }
 
-    private void loadSpawn() {
+    private void loadFromFile() {
         ConfigurationSection section = getConfig().getConfigurationSection("Spawn");
         if (section != null) {
             World world = Bukkit.getWorld(section.getString("World"));
@@ -68,7 +77,7 @@ public class AlwaysSpawn extends JavaPlugin implements Listener {
         }
     }
 
-    private void saveSpawn(Location spawn) {
+    private void saveToFile() {
         ConfigurationSection section = getConfig().createSection("Spawn");
         section.set("World", spawn.getWorld().getName());
         section.set("X", spawn.getX());

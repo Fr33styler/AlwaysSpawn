@@ -8,5 +8,7 @@ softdepend:
   - MultiWorld
   - Multiverse-Core
 commands:
+  Spawn:
+    description: The command which teleports the player to the spawn.
   SetSpawn:
     description: The command to set always spawn.
