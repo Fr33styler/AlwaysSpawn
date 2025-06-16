@@ -7,6 +7,9 @@ softdepend:
   - WorldLoader
   - MultiWorld
   - Multiverse-Core
+  - MyWorlds
+  - My_Worlds
+  - SlimeWorldManager
 commands:
   Spawn:
     description: The command which teleports the player to the spawn.

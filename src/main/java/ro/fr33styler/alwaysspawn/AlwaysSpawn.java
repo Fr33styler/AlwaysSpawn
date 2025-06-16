@@ -17,9 +17,6 @@ import org.spigotmc.event.player.PlayerSpawnLocationEvent;
 
 public class AlwaysSpawn extends JavaPlugin implements Listener {
 
-    private static final String PERMISSION_SPAWN = "alwaysspawn.spawn";
-    private static final String PERMISSION_SPAWN_SET = "alwaysspawn.set";
-
     private Location spawn;
 
     @Override
@@ -30,14 +27,14 @@ public class AlwaysSpawn extends JavaPlugin implements Listener {
 
     @EventHandler(priority = EventPriority.LOWEST)
     public void onSpawn(PlayerSpawnLocationEvent event) {
-        if (spawn != null) {
+        if (spawn != null && spawn.getWorld() != null) {
             event.setSpawnLocation(spawn);
         }
     }
 
     @EventHandler(priority = EventPriority.LOWEST)
     public void onRespawn(PlayerRespawnEvent event) {
-        if (spawn != null) {
+        if (spawn != null && spawn.getWorld() != null) {
             event.setRespawnLocation(spawn);
         }
     }
@@ -48,12 +45,12 @@ public class AlwaysSpawn extends JavaPlugin implements Listener {
             commandSender.sendMessage(ChatColor.RED + "Invalid arguments!");
         } else if (!(commandSender instanceof Player)) {
             commandSender.sendMessage(ChatColor.RED + "Must be executed by a player!");
-        } else if (label.equalsIgnoreCase("setSpawn") && commandSender.hasPermission(PERMISSION_SPAWN_SET)) {
+        } else if (label.equalsIgnoreCase("setSpawn") && commandSender.hasPermission("alwaysspawn.set")) {
             spawn = ((Player) commandSender).getLocation();
             saveToFile();
             commandSender.sendMessage(ChatColor.GREEN + "Spawn successfully set!");
             return true;
-        } else if (label.equalsIgnoreCase("spawn") && commandSender.hasPermission(PERMISSION_SPAWN)) {
+        } else if (label.equalsIgnoreCase("spawn") && commandSender.hasPermission("alwaysspawn.spawn")) {
             if (spawn == null) {
                 commandSender.sendMessage(ChatColor.RED + "You must set a spawn first!");
             } else {
